@@ -2,7 +2,7 @@
 
 from server.tools.financial_data import FinancialDataTool
 from server.tools.sec_filings import SECFilingsTool
-from shared.gemini import GeminiAgent
+from .gemini import GeminiAgent
 
 class FinancialIntelAgent:
     """

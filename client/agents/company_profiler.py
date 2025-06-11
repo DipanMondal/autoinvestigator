@@ -1,7 +1,7 @@
 # client/agents/company_profiler.py
 
 from server.tools.web_search import WebSearchTool
-from shared.gemini import GeminiAgent
+from .gemini import GeminiAgent
 
 class CompanyProfilerAgent:
     def __init__(self, company_name: str):

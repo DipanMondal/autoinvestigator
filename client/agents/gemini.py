@@ -1,5 +1,5 @@
 import google.generativeai as genai
-from .config import GEMINI_KEY,GEMINI_MODEL
+from shared.config import GEMINI_KEY,GEMINI_MODEL
 import os
 
 

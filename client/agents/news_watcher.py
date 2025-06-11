@@ -2,7 +2,7 @@
 
 from transformers import pipeline
 from server.tools.news_aggregator import NewsAggregatorTool
-from shared.gemini import GeminiAgent
+from .gemini import GeminiAgent
 
 class NewsWatcherAgent:
     def __init__(self, company_name: str):
