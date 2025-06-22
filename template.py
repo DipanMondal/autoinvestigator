@@ -10,10 +10,9 @@ files = [
     "server/tools/pdf_reader.py",
     "server/tools/news_aggregator.py",
     "server/tools/news_scanner.py",
-    "server/tools/sentiment_analyzer.py",
-    "server/tools/graph_tool.py",
     "server/tools/financial_data.py",
     "server/tools/sec_filings.py",
+    "server/tools/ticker_manager.py",
     
     "server/resources/__init__.py",
     "server/resources/memory_store.py",
@@ -39,7 +38,8 @@ files = [
     
     "client/orchestrator.py",
     "client/ui.py",
-    "client/main.py",
+    "client/demo.py",
+    "client/mcp_client.py",
     
     "shared/__init__.py"
     "shared/utils.py",

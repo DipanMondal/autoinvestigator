@@ -1,13 +1,19 @@
 [project]
 name = "autoinvestigator"
 version = "0.1.0"
-description = "An Agentic AI based package to autometically inspect company data and do risk assesment"
+description = "fullpackage with client, server, and shared packages"
+authors = [{ name = "Your Name", email = "your@email.com" }]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.8"
+dependencies = []
 
+[project.optional-dependencies]
+dev = []
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = {find = {}}
+packages = ["client", "server", "shared"]
 
-[tool.setuptools.dynamic]
-dependencies = {file = "requirements.txt"}

@@ -8,6 +8,12 @@ class FinancialDataTool:
     """
 
     def run(self, ticker: str) -> str:
+        """
+        This function extracts the financial data from the web using Yahoo Finance
+        
+        Args:
+            ticker : Ticker of the app.
+        """
         print(f"[FinancialDataTool] Fetching financials for {ticker}")
         stock = yf.Ticker(ticker)
         try:

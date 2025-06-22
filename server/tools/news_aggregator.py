@@ -5,9 +5,9 @@ import requests
 
 class NewsAggregatorTool:
     def __init__(self):
-        self.api_key = os.getenv("SERPAPI_KEY")
+        self.api_key = os.getenv("SERP_KEY")
         if not self.api_key:
-            raise EnvironmentError("SERPAPI_KEY is not set")
+            raise EnvironmentError("SERP_KEY is not set")
 
     def run(self, company_name: str) -> str:
         print(f"[NewsAggregatorTool] Fetching news for: {company_name}")
