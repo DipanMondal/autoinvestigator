@@ -2,6 +2,7 @@ from server.tool_descriptor import get_tool_description
 
 TOOL_DESCRIPTION = get_tool_description()
 
+
 BASIC_REQUEST_TEMPLATE = """
 {
     id : <id>,

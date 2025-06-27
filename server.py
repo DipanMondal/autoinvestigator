@@ -1,10 +1,9 @@
 from flask import Flask,request,jsonify
 from dotenv import load_dotenv
-from server.tools.web_search import WebSearchTool
+
 
 app=Flask(__name__)
 
-web_searcher = WebSearchTool()
 
 """
 Basic Request Format:
@@ -52,25 +51,61 @@ Basic Response Format:
 }
 """
 
+from server.interface import UTIL
 
-@app.route('/web-search',methods=['POST'])
-def web_search():
+util = UTIL()
+
+def request_handler(request):
+    try:
+        id = request['id'] if 'id' in request else None
+        response = {'id':id, 'results':[]}
+        
+        for req in request['requests']:
+            res = {}
+            res['id'] = req['id']
+            res['method'] = req['method']
+            n, method = req['method'].strip().split('/') 
+            
+            if n=='tools':
+                if method == "websearch":
+                    query = req['params']['query']
+                    ans = util.get_web_search(query)
+                    res['results'] = [ans]
+                elif method == "financial_descriptor":
+                    ticker = req['params']['ticker']
+                    cik = req['params']['cik']
+                    ans = util.get_financial_data(ticker=ticker,cik=cik)
+                    res['results'] = [ans]
+                elif method == "news":
+                    name = req['params']['name']
+                    ans = util.get_news(name=name)
+                    res['results'] = [util.get_news(name=name)]
+                elif method == "send_mail":
+                    subject = req['params']['subject']
+                    message = req['params']['message']
+                    receiver = req['params']['receiver']
+                    res['results']=[util.send_mail(subject=subject, message=message, receiver=receiver)]
+            elif n=="prompt":
+                pass
+            
+            elif n=="resources":
+                pass
+                
+            response['results'].append(res)
+        return response
+    except Exception as e:
+        raise e
+        return {"message":"Bad Request. Please check the format"}
+
+
+@app.route('/requests',methods=['POST'])
+def base():
     data = request.get_json()
     print(data)
+    res = request_handler(data)
+    return jsonify(res)
     
-    try:
-        name = data["company_name"]
-        query = f"Detail Company profile of {name} company profile site:investopedia.com OR site:crunchbase.com OR site:forbes.com OR site:finance.yahoo.com OR site:sec.gov"
-        results = web_searcher.run(query=query, num_results=5)
-        return jsonify({"results": results})
-    except KeyError:
-        return jsonify({"error":"There is no 'company_name' in your request"})
-    except Exception as e:
-        print(str(e))
-        return jsonify({"error":"Something went wrong. Can't search the web"})
-       
-    return jsonify({"message":f"{name}"})
-    
+   
 
 if __name__ == '__main__':
     load_dotenv()

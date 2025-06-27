@@ -18,21 +18,24 @@ class UTIL:
         self.mail_sender = MailSender()
         self.llm = GeminiAgent()
         
-    def get_web_search(query:str):
+    def get_web_search(self,query:str):
         result = self.web_search.run(query)
         return result
     
-    def get_news(name:str):
+    def get_news(self,name:str):
         result = self.news.run(name)
         return result
         
-    def get_financial(ticker:str, cik:str):
+    def get_financial_data(self,ticker:str, cik:str):
         fin = "No data"
         if ticker!="Unknown":
             fin = self.financial.run(ticker)
         sec = " found"
         if cik!="Unknown":
-            sec = self.sec_filings.run(cik)
+            sec = self.sectool.run(cik)
         return fin+"\n\n"+sec
+        
+    def send_mail(self, subject:str, message:str, receiver:str):
+        return self.mail_sender.sendMail(subject=subject, message=message, dest=receiver)
         
             
