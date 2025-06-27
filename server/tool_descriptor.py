@@ -25,3 +25,8 @@ Tool 4:
     description : This tool sends a designated to send a mail to a designated sender.
 """
     return description
+    
+    
+def get_prompt_list():
+    prompt_names = ['request_template','main_prompt']
+    return prompt_names

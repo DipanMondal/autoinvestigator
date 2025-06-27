@@ -29,6 +29,20 @@ Basic Request Format:
             }
         },
         ...
+        {
+            id:<prompt id>,
+            method : "prompt/<prompt_name>"
+        }
+        ...
+        {
+            id:<resource_id>,
+            method : "resource/<resource_name>",
+            action : [
+                action1,
+                action2,
+                ...
+            ]
+        }
     ]
 }
 
@@ -47,11 +61,24 @@ Basic Response Format:
             results:[...]
         },
         ...
+        {
+            id:<prompt id>,
+            method : "prompt/<prompt_name>"
+            results : [...]
+        }
+        ...
+        {
+            id:<resource_id>,
+            method : "resource/<resource_name>",
+            results : [...]
+        }
     ]
 }
 """
 
 from server.interface import UTIL
+from server.prompts.primary_prompts import BASIC_REQUEST_TEMPLATE,BASIC_PROMPT
+from server.tool_descriptor import get_tool_description, get_prompt_list
 
 util = UTIL()
 
@@ -85,9 +112,23 @@ def request_handler(request):
                     message = req['params']['message']
                     receiver = req['params']['receiver']
                     res['results']=[util.send_mail(subject=subject, message=message, receiver=receiver)]
+                elif method == "list":
+                    ans = get_tool_description()
+                    res['results'] = [ans]
+                else:
+                    res['results'] = []
+                    
             elif n=="prompt":
-                pass
-            
+                if method == "request_template":
+                    res['results'] = [BASIC_REQUEST_TEMPLATE]
+                elif method == "main_prompt":
+                    res['results'] = [BASIC_PROMPT]
+                elif method == "list":
+                    L = get_prompt_list();
+                    res['results'] = L
+                else:
+                    res['results'] = []
+                          
             elif n=="resources":
                 pass
                 

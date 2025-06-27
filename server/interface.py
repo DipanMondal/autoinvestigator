@@ -36,6 +36,5 @@ class UTIL:
         return fin+"\n\n"+sec
         
     def send_mail(self, subject:str, message:str, receiver:str):
-        return self.mail_sender.sendMail(subject=subject, message=message, dest=receiver)
-        
+        return self.mail_sender.sendMail(subject=subject, message=message, dest=receiver)       
             
