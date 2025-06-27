@@ -39,7 +39,7 @@ Basic Response Format:
     results:[
         {
             id:<request_id>,
-            method: "tools/<tool_name>,
+            method: "tools/<tool_name>",
             results:[...]
         },
         {
