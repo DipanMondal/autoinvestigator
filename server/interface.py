@@ -30,7 +30,7 @@ class UTIL:
         fin = "No data"
         if ticker!="Unknown":
             fin = self.financial.run(ticker)
-        sec = " found"
+        sec = "Not found"
         if cik!="Unknown":
             sec = self.sectool.run(cik)
         return fin+"\n\n"+sec
