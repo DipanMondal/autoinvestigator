@@ -69,3 +69,4 @@ beautifulsoup4
 google-generativeai
 yfinance
 duckduckgo-search
+vaderSentiment

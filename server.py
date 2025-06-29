@@ -126,6 +126,16 @@ def request_handler(request):
                     query = req['params']['query']
                     ans = util.llm.run(query) # 'util.llm' is the GeminiAgent instance
                     res['results'] = [ans]
+                elif method == "sentiment":
+                    text = req['params']['text']
+                    ans = util.analyze_sentiment(text)
+                    res['results'] = [ans]
+              
+          # Add this block for SEC filings
+                elif method == "sec_filings":
+                    cik = req['params']['cik']
+                    ans = util.sectool.run(cik)
+                    res['results'] = [ans]
                 else:
                     res['results'] = []
                     

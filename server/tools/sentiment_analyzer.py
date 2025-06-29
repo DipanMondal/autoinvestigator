@@ -1,22 +1,27 @@
-# server/tools/sentiment_analyzer.py
-
-from transformers import pipeline
+# We'll use the popular VADER library for sentiment analysis
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 class SentimentAnalyzerTool:
+    """
+    A tool to analyze the sentiment of a given text.
+    """
     def __init__(self):
-        # Using a distilled version for lighter compute requirements
-        self.sentiment_pipeline = pipeline(
-            "sentiment-analysis",
-            model="distilbert-base-uncased-finetuned-sst-2-english"
-        )
+        self.analyzer = SentimentIntensityAnalyzer()
+        print("[SentimentAnalyzerTool] Initialized.")
 
-    def run(self, text: str) -> dict:
-        print(f"[SentimentAnalyzerTool] Analyzing sentiment for text.")
-        # The pipeline returns a list of dictionaries
-        results = self.sentiment_pipeline(text[:512]) # Truncate to model's max length
-        print(results)
-        return results[0] if results else {"label": "NEUTRAL", "score": 0.0}
+    def run(self, text: str):
+        """
+        Analyzes the sentiment of the text.
 
-if __name__=='__main__':
-	ob = SentimentAnalyzerTool()
-	print(ob.run("I am winning the match"))
+        Args:
+            text (str): The text to analyze.
+
+        Returns:
+            dict: A dictionary containing the sentiment scores (pos, neu, neg, compound).
+                  The 'compound' score is the most useful metric (-1 to 1).
+        """
+        if not text:
+            return {"pos": 0.0, "neu": 1.0, "neg": 0.0, "compound": 0.0}
+            
+        sentiment_dict = self.analyzer.polarity_scores(text)
+        return sentiment_dict

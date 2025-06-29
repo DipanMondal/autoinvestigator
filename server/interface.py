@@ -6,7 +6,7 @@ from server.tools.news_scanner import NewsScannerTool
 from server.tools.mail_sender import MailSender
 from server.tools.string_to_json import string_to_json
 from server.tools.gemini import GeminiAgent
-
+from server.tools.sentiment_analyzer import SentimentAnalyzerTool
 
 class UTIL:
     def __init__(self):
@@ -17,7 +17,7 @@ class UTIL:
         self.news = NewsScannerTool()
         self.mail_sender = MailSender()
         self.llm = GeminiAgent()
-        
+        self.sentiment = SentimentAnalyzerTool()
     def get_web_search(self,query:str):
         result = self.web_search.run(query)
         return result
@@ -36,5 +36,8 @@ class UTIL:
         return fin+"\n\n"+sec
         
     def send_mail(self, subject:str, message:str, receiver:str):
-        return self.mail_sender.sendMail(subject=subject, message=message, dest=receiver)       
-            
+        return self.mail_sender.sendMail(subject=subject, message=message, dest=receiver)  
+    
+         
+    def analyze_sentiment(self, text: str):
+        return self.sentiment.run(text)     
