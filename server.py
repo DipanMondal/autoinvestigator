@@ -99,14 +99,21 @@ def request_handler(request):
                     ans = util.get_web_search(query)
                     res['results'] = [ans]
                 elif method == "financial_descriptor":
-                    ticker = req['params']['ticker']
-                    cik = req['params']['cik']
+                    ticker = req['params'].get('ticker')
+                    if ticker is None:
+                        ticker = "Unknown"
+                    cik = req['params'].get('cik')
+                    if cik is None:
+                        cik = "Unknown"
+                    print(f"Ticker: {ticker}, CIK: {cik}")
                     ans = util.get_financial_data(ticker=ticker,cik=cik)
                     res['results'] = [ans]
                 elif method == "news":
                     name = req['params']['name']
+    # Call the tool once and store the result in 'ans'
                     ans = util.get_news(name=name)
-                    res['results'] = [util.get_news(name=name)]
+    # Reuse the result
+                    res['results'] = [ans]
                 elif method == "send_mail":
                     subject = req['params']['subject']
                     message = req['params']['message']
@@ -114,6 +121,10 @@ def request_handler(request):
                     res['results']=[util.send_mail(subject=subject, message=message, receiver=receiver)]
                 elif method == "list":
                     ans = get_tool_description()
+                    res['results'] = [ans]
+                elif method == "gemini":
+                    query = req['params']['query']
+                    ans = util.llm.run(query) # 'util.llm' is the GeminiAgent instance
                     res['results'] = [ans]
                 else:
                     res['results'] = []
@@ -124,7 +135,7 @@ def request_handler(request):
                 elif method == "main_prompt":
                     res['results'] = [BASIC_PROMPT]
                 elif method == "list":
-                    L = get_prompt_list();
+                    L = get_prompt_list()
                     res['results'] = L
                 else:
                     res['results'] = []
