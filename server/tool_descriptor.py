@@ -18,11 +18,7 @@ Tool 3:
     description : This tool takes the company name and scans recent news articles related to lawsuits, fraud, or other risks for a given company.
 Tool 4:
     name: "send_mail"
-<<<<<<< HEAD
     params :
-=======
-    params:
->>>>>>> step
         1. subject:string(Subject of the mail)
         2. message:string(The actual mail body)
         3. receiver:string(email or name of receiver)
